@@ -4,7 +4,11 @@ Original code downloaded from https://downloads.sourceforge.net/project/louvain/
 
 I included #include <unistd.h> in main_community.cpp to get rid of error saying getpid() was not declared in the scope, as per https://stackoverflow.com/questions/17836865/getting-errors-while-compiling (issue caused due to compiler version difference)
 
-Remaining changes are just in main_community.cpp, modified to accept a seed argument
+Additional changes to accept and apply a seed are confined to main_community.cpp. The srand seed is applied at line 123.
+
+In graph_binary.cpp, lines 91-93 in the display method have been commented out such that even when a graph is weighted, the weights are not printed.
+
+main_community.cpp was modified in line 166 to terminate the loop once the level exceeds the display_level, so as to avoid unnecessary additional work.
 
 Original readme below.
 
