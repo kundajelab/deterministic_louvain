@@ -163,7 +163,7 @@ main(int argc, char **argv) {
 
     if (filename_part!=NULL && level==1) // do at least one more computation if partition is provided
       improvement=true;
-  } while(improvement);
+  } while((improvement && (level < display_level)));
 
   time(&time_end);
   if (verbose) {
