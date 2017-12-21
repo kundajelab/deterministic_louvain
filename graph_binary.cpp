@@ -87,10 +87,9 @@ Graph::display() {
     cout << node << ":" ;
     for (unsigned int i=0 ; i<nb_neighbors(node) ; i++) {
       if (true) {
-    /*Modified for MoDISco: don't waste time printing the weights*/
-	/*if (weights.size()!=0)
+	if (weights.size()!=0)
 	  cout << " (" << *(p.first+i) << " " << *(p.second+i) << ")";
-	else*/
+	else
 	  cout << " " << *(p.first+i);
       }
     }

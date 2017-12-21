@@ -8,9 +8,7 @@ I included #include <unistd.h> in main_community.cpp to get rid of error saying 
 
 Additional changes to accept and apply a seed are confined to main_community.cpp. The srand seed is applied at line 123.
 
-In graph_binary.cpp, lines 91-93 in the display method have been commented out such that even when a graph is weighted, the weights are not printed.
-
-main_community.cpp was modified in line 166 to terminate the loop once the level exceeds the display_level, so as to avoid unnecessary additional work.
+main_community.cpp was modified in line 150-151 to print out the hierarchy even when the level is not -1 (and not display the graph), and in line 164 to terminate the loop once the level exceeds the display_level, so as to avoid unnecessary additional work.
 
 Original readme below.
 
