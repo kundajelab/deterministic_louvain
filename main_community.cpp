@@ -147,9 +147,7 @@ main(int argc, char **argv) {
 
     improvement = c.one_level();
     new_mod = c.modularity();
-    if (++level==display_level)
-      g.display();
-    if (display_level==-1)
+    if ((++level <= display_level) || (display_level==-1))
       c.display_partition();
     g = c.partition2graph_binary();
     c = Community(g, -1, precision);
