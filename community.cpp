@@ -97,23 +97,35 @@ Community::init_partition(char * filename) {
 void
 Community::init_max_comm(int max_comm) {
   //initialize graph such that maximum community is max_comm-1
+  //first generate a random order
+
+  vector<int> random_order(size);
+  for (int i=0 ; i<size ; i++)
+    random_order[i]=i;
+
   int node;
-  for ( node=0 ; node<size ; node++) {
+  for (int i=0 ; i<size; i++) {
+    int rand_pos = rand()%(size-i)+i;
+    int tmp      = random_order[i];
+    random_order[i] = random_order[rand_pos];
+    random_order[rand_pos] = tmp;
+
+    node = random_order[i];
     int old_comm = n2c[node];
-    int comm = node%max_comm;
+    int comm = i%max_comm;
     neigh_comm(node);
     remove(node, old_comm, neigh_weight[old_comm]);
 
-    unsigned int i=0;
-    for ( i=0 ; i<neigh_last ; i++) {
-      int best_comm = neigh_pos[i];
-      float best_nblinks  = neigh_weight[neigh_pos[i]];
+    unsigned int j=0;
+    for ( j=0 ; j<neigh_last ; j++) {
+      int best_comm = neigh_pos[j];
+      float best_nblinks  = neigh_weight[neigh_pos[j]];
       if (best_comm==comm) {
         insert(node, best_comm, best_nblinks);
         break;
       }
     }
-    if (i==neigh_last) {
+    if (j==neigh_last) {
       insert(node, comm, 0);
     }
   }
