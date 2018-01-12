@@ -34,6 +34,7 @@ bool seed_initialized = 0;
 int seed       = 0;
 char *filename_w = NULL;
 char *filename_part = NULL;
+int max_comm = -1;
 int type       = UNWEIGHTED;
 int nb_pass    = 0;
 double precision = 0.000001;
@@ -45,10 +46,11 @@ bool verbose = false;
 void
 usage(char *prog_name, const char *more) {
   cerr << more;
-  cerr << "usage: " << prog_name << " input_file seed [-w weight_file] [-p part_file] [-q epsilon] [-l display_level] [-v] [-h]" << endl << endl;
+  cerr << "usage: " << prog_name << " input_file seed [-w weight_file] [-p part_file] [-m max_comm] [-q epsilon] [-l display_level] [-v] [-h]" << endl << endl;
   cerr << "input_file: file containing the graph to decompose in communities." << endl;
   cerr << "-w file\tread the graph as a weighted one (weights are set to 1 otherwise)." << endl;
   cerr << "-p file\tstart the computation with a given partition instead of the trivial partition." << endl;
+  cerr << "-m m\tenforce maximum number of communities m" << endl;
   cerr << "\tfile must contain lines \"node community\"." << endl;
   cerr << "-q eps\ta given pass stops when the modularity is increased by less than epsilon." << endl;
   cerr << "-l k\tdisplays the graph of level k rather than the hierachical structure." << endl;
@@ -73,6 +75,10 @@ parse_args(int argc, char **argv) {
 	break;
       case 'p':
         filename_part = argv[i+1];
+	i++;
+	break;
+      case 'm':
+        max_comm = atoi(argv[i+1]);
 	i++;
 	break;
       case 'q':
@@ -128,6 +134,8 @@ main(int argc, char **argv) {
     display_time("Begin");
 
   Community c(filename, filename_w, type, -1, precision);
+  if (max_comm > 0)
+    c.init_max_comm(max_comm);
   if (filename_part!=NULL)
     c.init_partition(filename_part);
   Graph g;

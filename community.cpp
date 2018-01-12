@@ -94,6 +94,31 @@ Community::init_partition(char * filename) {
   finput.close();
 }
 
+void
+Community::init_max_comm(int max_comm) {
+  //initialize graph such that maximum community is max_comm-1
+  int node;
+  for ( node=0 ; node<size ; node++) {
+    int old_comm = n2c[node];
+    int comm = node%max_comm;
+    neigh_comm(node);
+    remove(node, old_comm, neigh_weight[old_comm]);
+
+    unsigned int i=0;
+    for ( i=0 ; i<neigh_last ; i++) {
+      int best_comm = neigh_pos[i];
+      float best_nblinks  = neigh_weight[neigh_pos[i]];
+      if (best_comm==comm) {
+        insert(node, best_comm, best_nblinks);
+        break;
+      }
+    }
+    if (i==neigh_last) {
+      insert(node, comm, 0);
+    }
+  }
+}
+
 // inline void
 // Community::remove(int node, int comm, double dnodecomm) {
 //   assert(node>=0 && node<size);
