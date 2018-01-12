@@ -59,6 +59,9 @@ class Community {
   // initiliazes the partition with something else than all nodes alone
   void init_partition(char *filename_part);
 
+  // initiliazes to have max_comm communities
+  void init_max_comm(int max_comm);
+
   // display the community of each node
   void display();
 

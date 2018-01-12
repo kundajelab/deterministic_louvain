@@ -6,9 +6,11 @@ Original code downloaded from https://downloads.sourceforge.net/project/louvain/
 
 I included #include <unistd.h> in main_community.cpp to get rid of error saying getpid() was not declared in the scope, as per https://stackoverflow.com/questions/17836865/getting-errors-while-compiling (issue caused due to compiler version difference)
 
-Additional changes to accept and apply a seed are confined to main_community.cpp. The srand seed is applied at line 123.
+Additional changes to accept and apply a seed are confined to main_community.cpp. The srand seed is applied at line 129.
 
-main_community.cpp was modified in line 150-151 to print out the hierarchy even when the level is not -1 (and not display the graph), and in line 164 to terminate the loop once the level exceeds the display_level, so as to avoid unnecessary additional work.
+main_community.cpp was modified in line 158-159 to print out the hierarchy even when the level is not -1 (and not display the graph), and in line 172 to terminate the loop once the level exceeds the display_level, so as to avoid unnecessary additional work.
+
+To enforce a maximum number of communities, an init_max_comm function was added to community.cpp and community.h, and the command line of main_community.cpp was modified to accept a max_comm argument. Rather than each node being assigned to its own community, the largest community a node is assigned to is max_comm-1.
 
 Original readme below.
 
